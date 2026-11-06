@@ -1,0 +1,409 @@
+/* ==========================================================
+   MAYA FILE INTELLIGENCE — Neural Glass UI
+   Save as: public/css/file-assistant.css
+   Load AFTER css/style.css. CSS only — do not place in JS.
+   ========================================================== */
+
+#maya-file-assistant {
+  --fa-pink: var(--maya-pink, #ff2a85);
+  --fa-purple: var(--maya-purple, #8b5cf6);
+  --fa-cyan: var(--maya-cyan, #22d3ee);
+  --fa-text: var(--text-primary, #eef2ff);
+  --fa-muted: var(--text-secondary, #94a3b8);
+  --fa-dim: var(--text-muted, #64748b);
+  --fa-border: var(--border-glass, rgba(255,255,255,.09));
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin-top: 12px;
+  color: var(--fa-text);
+  font-family: var(--font-ui, 'Plus Jakarta Sans', sans-serif);
+}
+
+#maya-file-assistant[hidden] { display: none !important; }
+#maya-file-assistant *,
+#maya-file-assistant *::before,
+#maya-file-assistant *::after { box-sizing: border-box; }
+
+/* Hide chat/task content while the file workspace is active; keep header visible. */
+#chat-screen.file-assistant-open .workspace,
+#chat-screen.file-assistant-open > #task-panel { display: none !important; }
+#chat-screen.file-assistant-open #maya-file-assistant { display: flex; }
+
+#maya-file-assistant .maya-fa-shell {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 1180px;
+  min-height: 0;
+  max-height: 100%;
+  margin: 0 auto;
+  padding: clamp(15px, 2.2vw, 26px);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius-xl, 22px);
+  background:
+    radial-gradient(700px 320px at 100% 0%, rgba(139,92,246,.15), transparent 62%),
+    radial-gradient(520px 260px at 0% 100%, rgba(255,42,133,.10), transparent 65%),
+    rgba(6,9,24,.88);
+  box-shadow: 0 22px 70px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.045);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+#maya-file-assistant .maya-fa-shell::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--fa-pink), var(--fa-purple), var(--fa-cyan), transparent);
+}
+
+#maya-file-assistant h2,
+#maya-file-assistant h3,
+#maya-file-assistant p { margin-top: 0; }
+
+#maya-file-assistant .maya-fa-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+#maya-file-assistant .maya-fa-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+#maya-file-assistant .maya-fa-logo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 17px;
+  color: #fff;
+  font-size: 24px;
+  background: radial-gradient(circle at 30% 25%, #fff 0%, #ffb6d8 12%, var(--fa-pink) 48%, #55249b 100%);
+  box-shadow: 0 0 22px rgba(255,42,133,.34), inset 0 0 12px rgba(255,255,255,.3);
+}
+
+#maya-file-assistant .maya-fa-heading-copy { min-width: 0; }
+#maya-file-assistant .maya-fa-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--fa-cyan);
+  font: 600 9px/1.4 var(--font-hud, monospace);
+  letter-spacing: .18em;
+}
+#maya-file-assistant .maya-fa-heading h2 {
+  margin: 0 0 4px;
+  color: #fff;
+  font: 700 clamp(17px, 2vw, 22px)/1.25 var(--font-display, sans-serif);
+  letter-spacing: .075em;
+}
+#maya-file-assistant .maya-fa-subtitle {
+  margin: 0;
+  color: var(--fa-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#maya-file-assistant .maya-fa-back,
+#maya-file-assistant .maya-fa-button,
+#maya-file-assistant .maya-fa-chip,
+#maya-file-assistant .maya-fa-remove { font-family: inherit; }
+
+#maya-file-assistant .maya-fa-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid var(--fa-border);
+  border-radius: 999px;
+  color: var(--fa-text);
+  background: rgba(255,255,255,.055);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s ease;
+}
+#maya-file-assistant .maya-fa-back:hover {
+  border-color: rgba(255,42,133,.45);
+  color: #fff;
+  background: rgba(255,42,133,.12);
+  transform: translateY(-1px);
+}
+
+#maya-file-assistant .maya-fa-grid {
+  display: grid;
+  grid-template-columns: minmax(0,.92fr) minmax(0,1.08fr);
+  gap: 15px;
+  align-items: stretch;
+}
+#maya-file-assistant .maya-fa-card {
+  min-width: 0;
+  padding: clamp(15px,1.8vw,20px);
+  border: 1px solid rgba(255,255,255,.085);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(19,25,51,.92), rgba(9,13,30,.88));
+  box-shadow: 0 12px 32px rgba(0,0,0,.17), inset 0 1px 0 rgba(255,255,255,.035);
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+#maya-file-assistant .maya-fa-card:hover {
+  border-color: rgba(139,92,246,.28);
+  box-shadow: 0 16px 38px rgba(0,0,0,.24), 0 0 26px rgba(139,92,246,.055);
+}
+#maya-file-assistant .maya-fa-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+#maya-file-assistant .maya-fa-step {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255,42,133,.25);
+  border-radius: 10px;
+  color: #ff9bc8;
+  background: rgba(255,42,133,.10);
+  font: 600 11px var(--font-hud, monospace);
+}
+#maya-file-assistant .maya-fa-card-heading h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+#maya-file-assistant .maya-fa-card-heading p {
+  margin: 3px 0 0;
+  color: var(--fa-dim);
+  font-size: 11px;
+}
+
+#maya-file-assistant .maya-fa-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 178px;
+  padding: 22px 16px;
+  overflow: hidden;
+  text-align: center;
+  border: 1px dashed rgba(255,42,133,.45);
+  border-radius: 15px;
+  background: radial-gradient(circle at 50% 0%, rgba(255,42,133,.105), transparent 65%), rgba(4,8,22,.54);
+  cursor: pointer;
+  transition: border-color .22s ease, background .22s ease, transform .22s ease;
+}
+#maya-file-assistant .maya-fa-drop:hover,
+#maya-file-assistant .maya-fa-drop.is-dragging,
+#maya-file-assistant .maya-fa-drop:focus-visible {
+  border-color: var(--fa-cyan);
+  background: radial-gradient(circle at 50% 0%, rgba(34,211,238,.12), transparent 70%), rgba(4,8,22,.7);
+  transform: translateY(-2px);
+}
+#maya-file-assistant .maya-fa-upload-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(34,211,238,.24);
+  border-radius: 15px;
+  color: var(--fa-cyan);
+  background: rgba(34,211,238,.09);
+  font-size: 24px;
+}
+#maya-file-assistant .maya-fa-drop strong { margin-bottom: 5px; color: #fff; font-size: 13px; }
+#maya-file-assistant .maya-fa-drop span { color: var(--fa-muted); font-size: 10px; line-height: 1.5; }
+#maya-file-assistant .maya-fa-drop em {
+  margin-top: 12px;
+  padding: 7px 12px;
+  border: 1px solid rgba(34,211,238,.22);
+  border-radius: 999px;
+  color: var(--fa-cyan);
+  background: rgba(34,211,238,.07);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+#maya-file-assistant .maya-fa-file-input,
+#maya-file-assistant input[type="file"] { display: none; }
+#maya-file-assistant .maya-fa-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#maya-file-assistant .maya-fa-actions,
+#maya-file-assistant .maya-fa-result-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+#maya-file-assistant .maya-fa-actions { margin-top: 12px; }
+#maya-file-assistant .maya-fa-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--fa-pink), var(--fa-purple));
+  box-shadow: 0 5px 18px rgba(139,92,246,.18);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+#maya-file-assistant .maya-fa-button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 7px 22px rgba(255,42,133,.22); }
+#maya-file-assistant .maya-fa-button.secondary { color: var(--fa-text); background: rgba(255,255,255,.06); box-shadow: none; }
+#maya-file-assistant .maya-fa-button:disabled { opacity: .48; cursor: not-allowed; transform: none; }
+
+#maya-file-assistant textarea {
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  padding: 13px 14px;
+  resize: vertical;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 12px;
+  outline: none;
+  color: var(--fa-text);
+  background: rgba(3,7,19,.82);
+  font: 12px/1.65 var(--font-ui, sans-serif);
+}
+#maya-file-assistant textarea::placeholder { color: var(--fa-dim); }
+#maya-file-assistant textarea:focus { border-color: var(--fa-pink); box-shadow: 0 0 18px rgba(255,42,133,.12); }
+#maya-file-assistant .maya-fa-examples { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+#maya-file-assistant .maya-fa-chip {
+  padding: 7px 10px;
+  border: 1px solid var(--fa-border);
+  border-radius: 999px;
+  color: var(--fa-muted);
+  background: rgba(255,255,255,.025);
+  font-size: 10px;
+  cursor: pointer;
+  transition: .18s ease;
+}
+#maya-file-assistant .maya-fa-chip:hover { border-color: var(--fa-cyan); color: #fff; background: rgba(34,211,238,.07); }
+
+#maya-file-assistant .maya-fa-status { min-height: 22px; margin: 11px 0 0; color: var(--fa-muted); font-size: 10px; line-height: 1.5; }
+#maya-file-assistant .maya-fa-status.error { color: #ff929c; }
+#maya-file-assistant .maya-fa-file-list { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+#maya-file-assistant .maya-fa-file {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+#maya-file-assistant .maya-fa-file input[type="checkbox"] { flex: 0 0 auto; accent-color: var(--fa-pink); }
+#maya-file-assistant .maya-fa-file-name { flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--fa-text); font-size: 10px; }
+#maya-file-assistant .maya-fa-remove { flex: 0 0 auto; border: 0; color: #ff9a9a; background: transparent; font-size: 19px; cursor: pointer; }
+#maya-file-assistant .maya-fa-remove:hover { color: #fff; }
+#maya-file-assistant .maya-fa-empty-files { padding: 12px; color: var(--fa-dim); font-size: 10px; text-align: center; }
+
+#maya-file-assistant .maya-fa-result {
+  margin-top: 1px;
+  padding: clamp(14px,1.8vw,20px);
+  border: 1px solid rgba(34,211,238,.20);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(9,24,39,.88), rgba(10,13,31,.94));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 14px 38px rgba(0,0,0,.16);
+}
+#maya-file-assistant .maya-fa-result-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+#maya-file-assistant .maya-fa-result-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
+#maya-file-assistant .maya-fa-result-mark { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 10px; color: var(--fa-cyan); background: rgba(34,211,238,.10); }
+#maya-file-assistant .maya-fa-result-head h3 { margin: 0; color: #fff; font-size: 14px; }
+#maya-file-assistant .maya-fa-result-head p { margin: 3px 0 0; color: var(--fa-dim); font-size: 10px; }
+#maya-file-assistant .maya-fa-result-content {
+  max-height: min(52vh,560px);
+  min-height: 120px;
+  margin: 0;
+  padding: 17px;
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 12px;
+  color: #e8efff;
+  background: rgba(2,6,18,.72);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 12px/1.8 var(--font-ui, sans-serif);
+}
+#maya-file-assistant .maya-fa-hidden { display: none !important; }
+
+/* Header navigation button; put this button inside .header-actions. */
+.btn-file-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 13px;
+  border: 1px solid rgba(139,92,246,.38);
+  border-radius: 999px;
+  color: #e9ddff;
+  background: linear-gradient(135deg, rgba(139,92,246,.18), rgba(34,211,238,.09));
+  font: 600 11px var(--font-ui, sans-serif);
+  cursor: pointer;
+  transition: .22s ease;
+}
+.btn-file-mode:hover,
+.btn-file-mode.active {
+  color: #fff;
+  border-color: rgba(255,42,133,.55);
+  background: linear-gradient(135deg, rgba(255,42,133,.28), rgba(139,92,246,.22));
+  box-shadow: 0 0 18px rgba(139,92,246,.18);
+  transform: translateY(-1px);
+}
+.btn-file-mode .file-mode-icon { color: var(--maya-cyan, #22d3ee); }
+
+@media (max-width: 860px) {
+  #maya-file-assistant .maya-fa-grid { grid-template-columns: 1fr; }
+  #maya-file-assistant .maya-fa-shell { gap: 13px; padding: 14px; }
+  #maya-file-assistant .maya-fa-drop { min-height: 145px; }
+  #maya-file-assistant textarea { min-height: 125px; }
+  .btn-file-mode { width: 38px; min-width: 38px; padding: 0; font-size: 0; gap: 0; }
+  .btn-file-mode .file-mode-label { display: none; }
+  .btn-file-mode .file-mode-icon { font-size: 15px; }
+}
+@media (max-width: 520px) {
+  #maya-file-assistant .maya-fa-topbar { align-items: flex-start; }
+  #maya-file-assistant .maya-fa-logo { flex-basis: 42px; width: 42px; height: 42px; border-radius: 13px; font-size: 20px; }
+  #maya-file-assistant .maya-fa-subtitle { max-width: 230px; font-size: 10px; }
+  #maya-file-assistant .maya-fa-back { min-height: 35px; padding: 7px 10px; font-size: 10px; }
+  #maya-file-assistant .maya-fa-result-head { align-items: flex-start; flex-direction: column; }
+  #maya-file-assistant .maya-fa-result-actions { width: 100%; }
+  #maya-file-assistant .maya-fa-result-actions .maya-fa-button { flex: 1; }
+  #maya-file-assistant .maya-fa-actions .maya-fa-button { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #maya-file-assistant *, #maya-file-assistant *::before, #maya-file-assistant *::after, .btn-file-mode {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
